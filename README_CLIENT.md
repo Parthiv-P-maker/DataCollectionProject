@@ -55,8 +55,8 @@ Then **close the app completely and open it again once** so eye tracking starts.
 
 ### 3. Put the headset on the participant
 - Adjust it so the image is sharp.
-- Open the study app (Library -> Unknown Sources).
-- **Calibrate the eyes** if the headset asks, or: Settings -> Movement tracking -> Eye tracking -> Calibrate.
+- **Calibrate the eyes first**: Settings -> Movement tracking -> Eye tracking -> Calibrate. Finish the whole calibration.
+- **Only then** open the study app (Library -> Unknown Sources). If the app was already open, close it completely and open it again. The app only picks up eye tracking when it starts.
 
 ### 4. The "System Check" page (shown first in the headset)
 It shows four lines:
@@ -105,7 +105,7 @@ CollectedData\ExperimentData\
 | File | What it is |
 |---|---|
 | `P001_gaze.csv` | Where they looked, with answers (head direction only if eye tracking was off) |
-| `P001_heartrate.csv` | Heart rate (bpm) and beat intervals for each image, including the cross before and after it (about 20 s per image) |
+| `P001_heartrate.csv` | Heart rate (bpm) and beat intervals for each image, including the cross before and after it |
 | `P001_events.csv` | Exact times: cross shown, image start, image end, answers |
 | `P001_responses.csv` | All questionnaire answers |
 | `P001_image_N_overlay.png` | Heatmap of where they looked, drawn on the image |

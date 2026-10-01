@@ -640,9 +640,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8d2b36d0d1cf6741981893d8436f5b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blankDurationSeconds: 5
+  blankDurationSeconds: 1
   imageDurationSeconds: 10
   gazeSampleIntervalSeconds: 0.05
+  askComfortQuestions: 0
   startingQuestion:
     prompt: How comfortable do you feel right now?
     options:
@@ -668,8 +669,8 @@ MonoBehaviour:
     - 8
     - 9 - Very comfortable
   trials:
-  - trialName: Image 1
-    image: {fileID: 2800000, guid: 5f69f019a68f5a441ba30e0126e61172, type: 3}
+  - trialName: pano001
+    image: {fileID: 2800000, guid: 3a204c7c5948a344f92d84d86f6a5ce0, type: 3}
     questions:
     - prompt: How familiar was this place?
       options:
@@ -678,15 +679,8 @@ MonoBehaviour:
       - 3
       - 4
       - 5 - Very familiar
-    - prompt: How interesting was this place?
-      options:
-      - 1 - Not interesting
-      - 2
-      - 3
-      - 4
-      - 5 - Very interesting
   - trialName: Image 2
-    image: {fileID: 2800000, guid: 4a4a0e8d4f4f4f8a9b4a8c1d2e3f4002, type: 3}
+    image: {fileID: 2800000, guid: fc503128ebd093c4391dd820663e68b8, type: 3}
     questions:
     - prompt: How familiar was this place?
       options:
@@ -695,22 +689,8 @@ MonoBehaviour:
       - Moderately familiar
       - Very familiar
       - Extremely familiar
-    - prompt: How interesting was this place?
-      options:
-      - Not interesting
-      - Slightly interesting
-      - Moderately interesting
-      - Very interesting
-      - Extremely interesting
-    - prompt: How comfortable would you feel here?
-      options:
-      - Not comfortable
-      - Slightly comfortable
-      - Moderately comfortable
-      - Very comfortable
-      - Extremely comfortable
   - trialName: Image 3
-    image: {fileID: 2800000, guid: 4a4a0e8d4f4f4f8a9b4a8c1d2e3f4003, type: 3}
+    image: {fileID: 2800000, guid: 19e5d7d51e86a07499dca2bd8f76aedb, type: 3}
     questions:
     - prompt: How familiar was this place?
       options:
@@ -719,20 +699,6 @@ MonoBehaviour:
       - Moderately familiar
       - Very familiar
       - Extremely familiar
-    - prompt: How interesting was this place?
-      options:
-      - Not interesting
-      - Slightly interesting
-      - Moderately interesting
-      - Very interesting
-      - Extremely interesting
-    - prompt: How comfortable would you feel here?
-      options:
-      - Not comfortable
-      - Slightly comfortable
-      - Moderately comfortable
-      - Very comfortable
-      - Extremely comfortable
   comfortScaleReferenceImage: {fileID: 2800000, guid: 395e104c918e0a14ea11e4de71083884, type: 3}
   image1: {fileID: 2800000, guid: f745523ca9911b5438194aa4e71a00c6, type: 3}
   image2: {fileID: 2800000, guid: 4a4a0e8d4f4f4f8a9b4a8c1d2e3f4002, type: 3}

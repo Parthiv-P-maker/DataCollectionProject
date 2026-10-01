@@ -141,6 +141,7 @@ public class SimpleVrWorldBuilder : MonoBehaviour
     private Button readyButton;
     private float nextSetupRefreshTime;
     private bool editingBridgeIp;
+    private float nextEyeDiagnosticLogTime;
     private string ipEntry = "";
 
     private string DataDirectory => Path.Combine(Application.persistentDataPath, "ExperimentData");
@@ -648,7 +649,9 @@ public class SimpleVrWorldBuilder : MonoBehaviour
         else if (physiologyBridge.LastPhysiologyReceivedTime >= 0f &&
                  Time.unscaledTime - physiologyBridge.LastPhysiologyReceivedTime < 5f &&
                  !double.IsNaN(physiologyBridge.LastHeartRateBpm))
-            heartLine = "Heart rate: " + ok + " - " + physiologyBridge.LastHeartRateBpm.ToString("0", CultureInfo.InvariantCulture) + " bpm";
+            heartLine = physiologyBridge.LastHeartRateBpm < 30
+                ? "Heart rate: <color=#B00020>NO SKIN CONTACT</color> (wet the strap and tighten it)"
+                : "Heart rate: " + ok + " - " + physiologyBridge.LastHeartRateBpm.ToString("0", CultureInfo.InvariantCulture) + " bpm";
         else
             heartLine = "Heart rate: <color=#B00020>NO DATA</color> (" + physiologyBridge.Status + ")";
 
@@ -657,12 +660,19 @@ public class SimpleVrWorldBuilder : MonoBehaviour
             : "Clock sync: <color=#B00020>waiting</color>";
 
         string eyeLine;
+        Vector3 unusedPosition; Quaternion unusedRotation; string eyeDiagnostic;
+        bool eyeOk = TryReadEyeGaze(out unusedPosition, out unusedRotation, out eyeDiagnostic);
         if (eyeGazePoseAction == null || !eyeGazePoseAction.enabled)
             eyeLine = "Eye tracking: <color=#B00020>NOT AVAILABLE</color> (head direction will be used)";
-        else if (eyeGazePoseAction.ReadValue<PoseState>().isTracked)
+        else if (eyeOk)
             eyeLine = "Eye tracking: " + ok;
         else
-            eyeLine = "Eye tracking: <color=#B00020>NOT TRACKED</color> (check permission / calibration)";
+            eyeLine = "Eye tracking: <color=#B00020>NOT TRACKED</color> (" + eyeDiagnostic + ")";
+        if (Time.unscaledTime >= nextEyeDiagnosticLogTime)
+        {
+            Debug.Log("[EyeDiag] ok=" + eyeOk + " " + eyeDiagnostic, this);
+            nextEyeDiagnosticLogTime = Time.unscaledTime + 1f;
+        }
 
         string ipLine = physiologyBridge != null ? "\nLaptop IP: " + physiologyBridge.LaptopIpAddress : "";
         bodyText.text = heartLine + "\n" + clockLine + "\n" + eyeLine + ipLine;
@@ -1118,6 +1128,33 @@ public class SimpleVrWorldBuilder : MonoBehaviour
         }
     }
 
+    // Meta's runtime can deliver a valid gaze rotation without setting isTracked, so accept either signal.
+    private bool TryReadEyeGaze(out Vector3 position, out Quaternion rotation, out string diagnostic)
+    {
+        position = Vector3.zero;
+        rotation = Quaternion.identity;
+        if (eyeGazePoseAction == null || !eyeGazePoseAction.enabled)
+        {
+            diagnostic = "no eye action";
+            return false;
+        }
+        if (eyeGazePoseAction.controls.Count == 0)
+        {
+            diagnostic = "eye device not found";
+            return false;
+        }
+
+        PoseState pose = eyeGazePoseAction.ReadValue<PoseState>();
+        bool rotationValid = (pose.trackingState & UnityEngine.XR.InputTrackingState.Rotation) != 0;
+        diagnostic = "tracked=" + pose.isTracked + " state=" + pose.trackingState;
+        if (!pose.isTracked && !rotationValid)
+            return false;
+
+        position = pose.position;
+        rotation = pose.rotation;
+        return true;
+    }
+
     private void RecordGazeSample()
     {
         if (xrCamera == null || panoramaSphere == null)
@@ -1128,16 +1165,13 @@ public class SimpleVrWorldBuilder : MonoBehaviour
         string source = "head_fallback";
         bool gazeValid = false;
 
-        if (eyeGazePoseAction != null && eyeGazePoseAction.enabled)
+        Vector3 gazePosition; Quaternion gazeRotation; string unusedDiagnostic;
+        if (TryReadEyeGaze(out gazePosition, out gazeRotation, out unusedDiagnostic))
         {
-            PoseState gazePose = eyeGazePoseAction.ReadValue<PoseState>();
-            if (gazePose.isTracked)
-            {
-                origin = gazePose.position;
-                direction = gazePose.rotation * Vector3.forward;
-                source = "eye_gaze";
-                gazeValid = true;
-            }
+            origin = gazePosition;
+            direction = gazeRotation * Vector3.forward;
+            source = "eye_gaze";
+            gazeValid = true;
         }
 
         direction.Normalize();

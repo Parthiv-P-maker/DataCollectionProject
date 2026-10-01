@@ -6,8 +6,8 @@ The project now uses `Assets/Scenes/BasicScene.unity` as the build scene. The `E
 
 - User starts in the center of a simple flat floor.
 - A 1-to-9 comfort rating is collected at the start and end of the study. The opening rating must be answered before the Start button becomes active.
-- A blank white fixation screen showing only a black `+` is shown for 5 seconds before and after every image.
-- Each 360-degree equirectangular image is shown inside an inward-facing sphere for 10 seconds.
+- A blank white fixation screen showing only a black `+` is shown before and after every image for `Blank Duration Seconds` (Experiment Controller; currently 1 s).
+- Each 360-degree equirectangular image is shown inside an inward-facing sphere for `Image Duration Seconds` (currently 10 s). Both durations are set in the Inspector and need a rebuild.
 - Eye gaze is sampled every 0.05 seconds while each image is visible.
 - If eye tracking is unavailable, including on Quest 3S, head direction is recorded as `head_fallback` so the flow can still be tested.
 - Startup checks the detected headset and shows a compatibility warning for unsupported or unknown hardware. Initialization errors are shown on-screen instead of leaving a blank view.
@@ -58,7 +58,7 @@ ExperimentData/
   P001/
     P001_gaze.csv              gaze per sample with panorama u/v and answers
     P001_gaze_lsl.csv          gaze with LSL timestamps (for joining with heart rate)
-    P001_heartrate.csv         Polar H10 HR / RR for each trial's full 20 s window
+    P001_heartrate.csv         Polar H10 HR / RR for each trial's window (fixation + image + fixation)
     P001_events.csv            fixation, image shown/hidden, answers (timestamped)
     P001_responses.csv         one row per questionnaire answer
     P001_image_<n>_heatmap.csv / .png
@@ -69,7 +69,7 @@ ExperimentData/
     combined_image_<n>_heatmap.csv / .png
 ```
 
-Heart rate is recorded for each trial from the opening fixation cross to the end of the closing fixation cross: 5 s + 10 s + 5 s = about 20 s per image, so a pre-image baseline and a post-image recovery are included. Every sample carries a `phase` column of `fixation_before`, `image` or `fixation_after`, based on its own LSL timestamp (receipt time is used until the clock is synchronized). Set `Record Physiology Only During Stimulus` off on `ExperimentRecordingSystem` to record the whole session instead.
+Heart rate is recorded for each trial from the opening fixation cross to the end of the closing fixation cross: fixation + image + fixation per image (1 s + 10 s + 1 s with the current settings), so a pre-image baseline and a post-image recovery are included. Every sample carries a `phase` column of `fixation_before`, `image` or `fixation_after`, based on its own LSL timestamp (receipt time is used until the clock is synchronized). Set `Record Physiology Only During Stimulus` off on `ExperimentRecordingSystem` to record the whole session instead.
 
 `P001_events.csv` marks the image boundaries as `StimulusShown` / `StimulusHidden` with `image_start_marker` / `image_end_marker`, and the two fixation crosses as `before_image` / `after_image`.
 

@@ -1,6 +1,6 @@
 # VR Study - Instructions for Running Sessions
 
-This study shows each participant three 360-degree images in a Meta Quest Pro headset while recording where they look (eye tracking) and their heart rate (Polar H10 chest strap). Everything is saved automatically, one folder per participant.
+This study shows each participant a series of 360-degree street images (currently 8) in a Meta Quest Pro headset while recording where they look (eye tracking) and their heart rate (Polar H10 chest strap). Everything is saved automatically, one folder per participant.
 
 You do **not** need to use Unity. You only need the files in this folder.
 
@@ -74,7 +74,7 @@ It shows four lines:
 
 ### 5. The experiment (runs by itself)
 1. After you press Ready, the first image sequence starts straight away.
-2. For each of the 3 images: a blank white screen with a cross, then the image, then the cross again, then a few questions.
+2. For each image (currently 8): a blank white screen with a cross, then the image, then the cross again, then one question: "How safe do you feel in this alley (or street corridor)?" answered on a 1-5 scale.
 3. A "Thank you" screen with an Exit button.
 
 Tell the participant to keep the headset on and look around naturally. They use the controller to point and press.
@@ -111,7 +111,7 @@ CollectedData\ExperimentData\
 | `P001_image_N_overlay.png` | Heatmap of where they looked, drawn on the image |
 | `P001_image_N_scanpath.png` | Their gaze path drawn on the image |
 | `P001_heartrate_trial_N.png` | Heart-rate chart for one image, with lines where the image starts and ends |
-| `P001_heartrate_all_trials.png` | All three charts together |
+| `P001_heartrate_all_trials.png` | All images' heart-rate charts together |
 | `Combined\combined_image_N_overlay.png` | Everyone's gaze on one image |
 
 In `P001_gaze.csv`, rows with `gaze_valid` = 1 are real eye tracking. Rows with 0 were head direction only (eye tracking lost).

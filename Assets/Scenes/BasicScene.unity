@@ -669,36 +669,86 @@ MonoBehaviour:
     - 8
     - 9 - Very comfortable
   trials:
-  - trialName: pano001
+  - trialName: Pano001
     image: {fileID: 2800000, guid: 3a204c7c5948a344f92d84d86f6a5ce0, type: 3}
     questions:
-    - prompt: How familiar was this place?
+    - prompt: How safe do you feel in this alley (or street corridor)?
       options:
-      - 1 - Not familiar
-      - 2
-      - 3
-      - 4
-      - 5 - Very familiar
-  - trialName: Image 2
+      - 1 - Very unsafe
+      - 2 - Unsafe
+      - 3 - Uncertain (neutral)
+      - 4 - Safe
+      - 5 - Very safe
+  - trialName: Pano002
     image: {fileID: 2800000, guid: fc503128ebd093c4391dd820663e68b8, type: 3}
     questions:
-    - prompt: How familiar was this place?
+    - prompt: How safe do you feel in this alley (or street corridor)?
       options:
-      - Not familiar
-      - Slightly familiar
-      - Moderately familiar
-      - Very familiar
-      - Extremely familiar
-  - trialName: Image 3
+      - 1 - Very unsafe
+      - 2 - Unsafe
+      - 3 - Uncertain (neutral)
+      - 4 - Safe
+      - 5 - Very safe
+  - trialName: Pano003
     image: {fileID: 2800000, guid: 19e5d7d51e86a07499dca2bd8f76aedb, type: 3}
     questions:
-    - prompt: How familiar was this place?
+    - prompt: How safe do you feel in this alley (or street corridor)?
       options:
-      - Not familiar
-      - Slightly familiar
-      - Moderately familiar
-      - Very familiar
-      - Extremely familiar
+      - 1 - Very unsafe
+      - 2 - Unsafe
+      - 3 - Uncertain (neutral)
+      - 4 - Safe
+      - 5 - Very safe
+  - trialName: Pano004
+    image: {fileID: 2800000, guid: 630c2990bd2391943bb539da96f889b9, type: 3}
+    questions:
+    - prompt: How safe do you feel in this alley (or street corridor)?
+      options:
+      - 1 - Very unsafe
+      - 2 - Unsafe
+      - 3 - Uncertain (neutral)
+      - 4 - Safe
+      - 5 - Very safe
+  - trialName: Pano005
+    image: {fileID: 2800000, guid: f2712005fc0242a4ea54f63bfc181150, type: 3}
+    questions:
+    - prompt: How safe do you feel in this alley (or street corridor)?
+      options:
+      - 1 - Very unsafe
+      - 2 - Unsafe
+      - 3 - Uncertain (neutral)
+      - 4 - Safe
+      - 5 - Very safe
+  - trialName: Pano006
+    image: {fileID: 2800000, guid: c27c017f21ce6384fa73052ff7f0b6d3, type: 3}
+    questions:
+    - prompt: How safe do you feel in this alley (or street corridor)?
+      options:
+      - 1 - Very unsafe
+      - 2 - Unsafe
+      - 3 - Uncertain (neutral)
+      - 4 - Safe
+      - 5 - Very safe
+  - trialName: Pano007
+    image: {fileID: 2800000, guid: 26f33f3c0935a624580ce820654b8967, type: 3}
+    questions:
+    - prompt: How safe do you feel in this alley (or street corridor)?
+      options:
+      - 1 - Very unsafe
+      - 2 - Unsafe
+      - 3 - Uncertain (neutral)
+      - 4 - Safe
+      - 5 - Very safe
+  - trialName: Pano008
+    image: {fileID: 2800000, guid: d8d81693c72e4ed4c8b717772b14f344, type: 3}
+    questions:
+    - prompt: How safe do you feel in this alley (or street corridor)?
+      options:
+      - 1 - Very unsafe
+      - 2 - Unsafe
+      - 3 - Uncertain (neutral)
+      - 4 - Safe
+      - 5 - Very safe
   comfortScaleReferenceImage: {fileID: 2800000, guid: 395e104c918e0a14ea11e4de71083884, type: 3}
   image1: {fileID: 2800000, guid: f745523ca9911b5438194aa4e71a00c6, type: 3}
   image2: {fileID: 2800000, guid: 4a4a0e8d4f4f4f8a9b4a8c1d2e3f4002, type: 3}

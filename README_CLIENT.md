@@ -48,9 +48,10 @@ Then **close the app completely and open it again once** so eye tracking starts.
 
 ### 2. Start the software
 1. Double-click **StartSession.bat**.
-2. Two more windows open. **Leave them open.**
+2. More windows open. **Leave them open.**
    - **"Study - Polar H10"** should start printing lines like `HR 72 bpm`. If it keeps saying "Not found", re-wet the strap and make sure Excite-O-Meter is closed.
    - **"Study - Bridge"** will say `Connected LSL stream: HeartRate`.
+   - **"Live heart rate"** shows a live chart. Green "Strap OK" with a number is good. Red **NO SKIN CONTACT** means wet the strap and tighten it. Keep this window visible during the session. Nothing in it is saved.
 3. The first window prints **this laptop's address** (for example `192.168.1.106`). Keep it in mind for step 4.
 
 ### 3. Put the headset on the participant
@@ -112,7 +113,12 @@ CollectedData\ExperimentData\
 | `P001_image_N_scanpath.png` | Their gaze path drawn on the image |
 | `P001_heartrate_trial_N.png` | Heart-rate chart for one image, with lines where the image starts and ends |
 | `P001_heartrate_all_trials.png` | All images' heart-rate charts together |
+| `P001_fixations.csv` | Every fixation (where the eyes stopped on something): start time, duration, position on the image |
+| `P001_fixation_summary.csv` | Per image: % valid eye data, number of fixations, average fixation length |
+| `P001_image_N_fixations.png` | Fixations drawn on the image (bigger circle = longer look, number = order) |
 | `Combined\combined_image_N_overlay.png` | Everyone's gaze on one image |
+
+**Quick quality check:** open `P001_fixation_summary.csv`. If `valid_percent` is well below 80 for an image, eye tracking was poor for that image (recalibrate before the next participant).
 
 In `P001_gaze.csv`, rows with `gaze_valid` = 1 are real eye tracking. Rows with 0 were head direction only (eye tracking lost).
 

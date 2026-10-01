@@ -26,6 +26,7 @@ echo.
 echo Closing the heart-rate and headset-link windows...
 taskkill /fi "WINDOWTITLE eq Study - Polar H10*" /f /t >nul 2>&1
 taskkill /fi "WINDOWTITLE eq Study - Bridge*" /f /t >nul 2>&1
+taskkill /fi "WINDOWTITLE eq Study - Live heart rate*" /f /t >nul 2>&1
 
 echo.
 echo Looking for the headset (it must be plugged in with the USB cable)...
@@ -54,6 +55,10 @@ if errorlevel 1 (
 echo.
 echo Creating the pictures (heatmaps and heart-rate charts)...
 "%PY%" Tools\make_visuals.py "CollectedData\ExperimentData"
+
+echo.
+echo Finding eye fixations...
+"%PY%" Tools\gaze_fixations.py "CollectedData\ExperimentData"
 
 echo.
 echo ============================================================

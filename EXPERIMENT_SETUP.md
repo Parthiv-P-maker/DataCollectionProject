@@ -75,6 +75,10 @@ Heart rate is recorded for each trial from the opening fixation cross to the end
 
 `python Tools/make_visuals.py <ExperimentData folder>` (use Anaconda Python) draws, without touching existing files: `P001_image_N_overlay.png` (heatmap on the panorama), `P001_image_N_scanpath.png`, `P001_heartrate_trial_N.png` and `P001_heartrate_all_trials.png` (heart rate with image start/end lines) in each participant folder, and `Combined/combined_image_N_overlay.png`. Add `--participant P007` for one person. Run it on the laptop after copying data off the headset; if an overlay looks mirrored left/right, add `--flip-u`.
 
+`python Tools/gaze_fixations.py <ExperimentData folder>` detects fixations offline with I-DT (dispersion 1.5 deg, minimum 100 ms, adjacent same-spot fixations merged; `--dispersion-deg` / `--min-duration` to change) from the ~20 Hz eye samples (`gaze_valid = 1` only), writing `P001_fixations.csv`, `P001_fixation_summary.csv` and `P001_image_N_fixations.png`. FinishSession.bat runs it automatically. Timing resolution is about 50 ms because the app samples gaze at 20 Hz.
+
+`python Tools/live_heart_rate.py` shows a live laptop chart of the Polar H10 heart rate with a no-contact warning (opened by StartSession.bat). It reads the LSL stream directly, so it has no image markers and saves nothing.
+
 `python Tools/analyze_session.py <participant-folder>` merges gaze, events and heart rate into `synchronized.csv`, one row per sample sorted by time, carrying the `phase` column and the image start/end markers for plotting.
 
 The CSV stores normalized equirectangular coordinates as `pano_u` and `pano_v`, so samples can be mapped back onto the panorama later. It also includes both the opening and ending comfort ratings.

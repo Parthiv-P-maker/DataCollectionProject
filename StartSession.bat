@@ -38,9 +38,14 @@ timeout /t 8 /nobreak >nul
 echo Starting the headset link (window "Study - Bridge")...
 start "Study - Bridge" cmd /k ""%PY%" "Tools\physiology_lsl_bridge.py" --quest-port 8765 --backup-dir "bridge_recordings\%STAMP%""
 
+echo Opening the live heart-rate window...
+start "Study - Live heart rate" /min cmd /c ""%PY%" "Tools\live_heart_rate.py""
+
 echo.
 echo ============================================================
-echo  READY. Two new windows are open. Leave them open.
+echo  READY. Leave the "Study" windows open.
+echo  The "Live heart rate" chart shows the strap's heart rate live and
+echo  warns in red if the strap loses skin contact.
 echo.
 echo  This laptop's address:   %LAPTOP_IP%
 echo.

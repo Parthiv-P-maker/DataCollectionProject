@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: a8d2b36d0d1cf6741981893d8436f5b6
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - comfortScaleReferenceImage: {fileID: 2800000, guid: aed50b514ab9268479a8b61636ca630c, type: 3}
+  - image1: {instanceID: 0}
+  - image2: {instanceID: 0}
+  - image3: {instanceID: 0}
+  - panoramaMaterial: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

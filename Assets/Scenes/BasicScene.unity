@@ -119,6 +119,50 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &285005033
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 285005035}
+  - component: {fileID: 285005034}
+  m_Layer: 0
+  m_Name: EoM_DataReceiver
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &285005034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285005033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba50fa3e507267f4daf95fa681d5dd13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EoM_DataReceiver
+--- !u!4 &285005035
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285005033}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &299639867
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,14 +189,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 299639867}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 13
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 2
     m_Resolution: -1
@@ -197,7 +241,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -229,17 +273,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Version: 3
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
-  m_LightLayerMask: 1
-  m_RenderingLayers: 1
   m_CustomShadowLayers: 0
-  m_ShadowLayerMask: 1
-  m_ShadowRenderingLayers: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+  m_RenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ShadowRenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_Version: 4
+  m_LightLayerMask: 1
+  m_ShadowLayerMask: 1
+  m_RenderingLayers: 1
+  m_ShadowRenderingLayers: 1
 --- !u!1001 &441087506
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -409,6 +459,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -430,9 +482,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1249617920
 MeshFilter:
@@ -540,6 +594,184 @@ MonoBehaviour:
   m_Teleporting:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1800000000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1800000001}
+  - component: {fileID: 1800000002}
+  - component: {fileID: 1800000004}
+  - component: {fileID: 1800000003}
+  m_Layer: 0
+  m_Name: Experiment Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1800000001
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800000000}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1800000002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800000000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8d2b36d0d1cf6741981893d8436f5b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blankDurationSeconds: 5
+  imageDurationSeconds: 10
+  gazeSampleIntervalSeconds: 0.05
+  startingQuestion:
+    prompt: How comfortable do you feel right now?
+    options:
+    - 1 - Not comfortable
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9 - Very comfortable
+  endingComfortQuestion:
+    prompt: How comfortable do you feel now?
+    options:
+    - 1 - Not comfortable
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9 - Very comfortable
+  trials:
+  - trialName: Image 1
+    image: {fileID: 2800000, guid: 5f69f019a68f5a441ba30e0126e61172, type: 3}
+    questions:
+    - prompt: How familiar was this place?
+      options:
+      - 1 - Not familiar
+      - 2
+      - 3
+      - 4
+      - 5 - Very familiar
+    - prompt: How interesting was this place?
+      options:
+      - 1 - Not interesting
+      - 2
+      - 3
+      - 4
+      - 5 - Very interesting
+  - trialName: Image 2
+    image: {fileID: 2800000, guid: 4a4a0e8d4f4f4f8a9b4a8c1d2e3f4002, type: 3}
+    questions:
+    - prompt: How familiar was this place?
+      options:
+      - Not familiar
+      - Slightly familiar
+      - Moderately familiar
+      - Very familiar
+      - Extremely familiar
+    - prompt: How interesting was this place?
+      options:
+      - Not interesting
+      - Slightly interesting
+      - Moderately interesting
+      - Very interesting
+      - Extremely interesting
+    - prompt: How comfortable would you feel here?
+      options:
+      - Not comfortable
+      - Slightly comfortable
+      - Moderately comfortable
+      - Very comfortable
+      - Extremely comfortable
+  - trialName: Image 3
+    image: {fileID: 2800000, guid: 4a4a0e8d4f4f4f8a9b4a8c1d2e3f4003, type: 3}
+    questions:
+    - prompt: How familiar was this place?
+      options:
+      - Not familiar
+      - Slightly familiar
+      - Moderately familiar
+      - Very familiar
+      - Extremely familiar
+    - prompt: How interesting was this place?
+      options:
+      - Not interesting
+      - Slightly interesting
+      - Moderately interesting
+      - Very interesting
+      - Extremely interesting
+    - prompt: How comfortable would you feel here?
+      options:
+      - Not comfortable
+      - Slightly comfortable
+      - Moderately comfortable
+      - Very comfortable
+      - Extremely comfortable
+  comfortScaleReferenceImage: {fileID: 2800000, guid: 395e104c918e0a14ea11e4de71083884, type: 3}
+  image1: {fileID: 2800000, guid: f745523ca9911b5438194aa4e71a00c6, type: 3}
+  image2: {fileID: 2800000, guid: 4a4a0e8d4f4f4f8a9b4a8c1d2e3f4002, type: 3}
+  image3: {fileID: 2800000, guid: 4a4a0e8d4f4f4f8a9b4a8c1d2e3f4003, type: 3}
+  panoramaMaterial: {fileID: 2100000, guid: d29a5388d28a4fa4abe203e14c3c690a, type: 2}
+  experimentRecorder: {fileID: 1800000003}
+  physiologyBridge: {fileID: 1800000004}
+  sessionId: S001
+--- !u!114 &1800000003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800000000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e8d1754248c67b4a9f37d5edca7e63e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ExperimentRecordingSystem
+  sessionId: S001
+  flushEveryRecords: 25
+  recordPhysiologyOnlyDuringStimulus: 1
+--- !u!114 &1800000004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800000000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b79148249eaa8747b5cf7ee513af95b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PhysiologyBridgeClient
+  recorder: {fileID: 1800000003}
+  laptopIpAddress: 127.0.0.1
+  port: 8765
+  syncIntervalSeconds: 2
 --- !u!1 &2092139007
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,3 +869,5 @@ SceneRoots:
   - {fileID: 756192408}
   - {fileID: 2092139010}
   - {fileID: 1249617921}
+  - {fileID: 1800000001}
+  - {fileID: 285005035}

@@ -105,3 +105,13 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# Local caches, test data and generated output
+.dotnet-home/
+__pycache__/
+*.pyc
+bridge_recordings/
+CollectedData/
+*_BurstDebugInformation_DoNotShip/
+/Assets/_Recovery/
+/Assets/_Recovery.meta

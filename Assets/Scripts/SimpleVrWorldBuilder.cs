@@ -34,6 +34,8 @@ public class SimpleVrWorldBuilder : MonoBehaviour
     public float gazeSampleIntervalSeconds = 0.05f;
 
     [Header("Experiment Content")]
+    [Tooltip("Show the 1-9 comfort rating at the start and end of the session. Off by default.")]
+    public bool askComfortQuestions = false;
     public ExperimentQuestion startingQuestion = new ExperimentQuestion
     {
         prompt = "How comfortable do you feel right now?",
@@ -674,7 +676,10 @@ public class SimpleVrWorldBuilder : MonoBehaviour
     private void OnSetupReady()
     {
         readyButton = null;
-        ShowIntro();
+        if (askComfortQuestions)
+            ShowIntro();
+        else
+            StartExperiment();
     }
 
     private void ExitApplication()
@@ -701,7 +706,7 @@ public class SimpleVrWorldBuilder : MonoBehaviour
 
     private void StartExperiment()
     {
-        if (experimentCoroutine != null || string.IsNullOrEmpty(startAnswer))
+        if (experimentCoroutine != null || (askComfortQuestions && string.IsNullOrEmpty(startAnswer)))
             return;
 
         finalComfortAnswer = "";
@@ -710,7 +715,8 @@ public class SimpleVrWorldBuilder : MonoBehaviour
             trialRecords.Add(new TrialRecord());
 
         experimentRecorder?.BeginSession(participantId, sessionId, ParticipantDirectory);
-        experimentRecorder?.LogEvent("StartingComfortAnswered", "", startAnswer);
+        if (askComfortQuestions)
+            experimentRecorder?.LogEvent("StartingComfortAnswered", "", startAnswer);
 
         experimentCoroutine = StartCoroutine(RunExperiment());
     }
@@ -728,7 +734,8 @@ public class SimpleVrWorldBuilder : MonoBehaviour
             yield return RunQuestionPeriod(currentTrialIndex);
         }
 
-        yield return RunFinalComfortQuestion();
+        if (askComfortQuestions)
+            yield return RunFinalComfortQuestion();
         SaveExperimentData();
         experimentRecorder?.LogEvent("ExperimentComplete", "", "legacy_gaze_export_saved");
         experimentRecorder?.CloseSession();

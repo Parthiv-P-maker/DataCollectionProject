@@ -46,7 +46,7 @@ Requires `pip install bleak pylsl`. ECG is not streamed.
 ## Session flow
 
 1. **System check**: shows the auto-generated participant ID (`P001`, `P002`, ...), live Polar H10 heart rate, LSL clock sync and eye-tracking status. Nothing on this page is saved. Press **Ready**.
-2. Opening comfort rating, then fixation / image / fixation / questions for each image, then closing comfort rating.
+2. Fixation / image / fixation / questions for each image. The opening and closing 1-9 comfort ratings are switched off by default; tick `Ask Comfort Questions` on the Experiment Controller to bring them back (their columns stay in the CSVs, blank when off).
 3. **Experiment Complete** screen with an **Exit** button that closes the files and quits the app.
 
 The participant ID is the next free number after the highest existing `P###` folder. Pull the data off the headset after every session: uninstalling the app deletes its data folder and restarts numbering at `P001`.

@@ -73,9 +73,9 @@ It shows four lines:
 - Nothing on this page is saved.
 
 ### 5. The experiment (runs by itself)
-1. The participant answers one question about how comfortable they feel.
+1. After you press Ready, the first image sequence starts straight away.
 2. For each of the 3 images: a blank white screen with a cross, then the image, then the cross again, then a few questions.
-3. A final comfort question, then a "Thank you" screen.
+3. A "Thank you" screen with an Exit button.
 
 Tell the participant to keep the headset on and look around naturally. They use the controller to point and press.
 

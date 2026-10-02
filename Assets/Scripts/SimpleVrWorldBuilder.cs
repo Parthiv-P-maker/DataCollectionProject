@@ -36,6 +36,25 @@ public class SimpleVrWorldBuilder : MonoBehaviour
     [Header("Experiment Content")]
     [Tooltip("Show the 1-9 comfort rating at the start and end of the session. Off by default.")]
     public bool askComfortQuestions = false;
+
+    [Header("Instructions Page")]
+    [Tooltip("Shown after the System Check page, before the first image.")]
+    public bool showInstructions = true;
+    public string instructionsTitle = "General Instruction";
+    [Tooltip("Rich text is allowed, e.g. <b>bold</b>. The font shrinks automatically to fit.")]
+    [TextArea(6, 20)]
+    public string instructionsText =
+        "<b>Welcome to the Visual Perception Task!</b>\n\n" +
+        "In this session, you will view a series of 16 360° images showcasing various street environments.\n\n" +
+        "<b>Observe:</b> Each image will be displayed in the headset for 10 seconds. Please look around naturally, focusing on whichever details catch your attention.\n\n" +
+        "<b>Rate:</b> Immediately following each image, you will answer 5 brief questions using a 7-point scale to share how the image made you feel.\n\n" +
+        "<b>Important Guidelines for Accurate Recording:</b>\n" +
+        "<b>Keep Still:</b> Try to keep your head as steady as possible throughout the task.\n" +
+        "<b>Blink Normally:</b> Feel free to blink naturally. No need to hold your eyes open unnaturally.\n" +
+        "<b>Take Your Time:</b> Answer the questions honestly based on your immediate impression. There are no right or wrong answers.\n\n" +
+        "By pressing the start button below, you confirm that you have read the study information and voluntarily consent to participate.\n\n" +
+        "When you are comfortable and ready to begin, press the START button.";
+    public string instructionsButtonLabel = "START";
     public ExperimentQuestion startingQuestion = new ExperimentQuestion
     {
         prompt = "How comfortable do you feel right now?",
@@ -74,7 +93,8 @@ public class SimpleVrWorldBuilder : MonoBehaviour
         Image,
         Questions,
         Complete,
-        Setup
+        Setup,
+        Instructions
     }
 
     [Serializable]
@@ -139,6 +159,7 @@ public class SimpleVrWorldBuilder : MonoBehaviour
     private string selectedRating = "";
 
     private Button readyButton;
+    private Button instructionsStartButton;
     private float nextSetupRefreshTime;
     private bool editingBridgeIp;
     private float nextEyeDiagnosticLogTime;
@@ -318,6 +339,12 @@ public class SimpleVrWorldBuilder : MonoBehaviour
                 desktopAnswerButtons[i].onClick.Invoke();
                 return;
             }
+        }
+
+        if (state == ExperimentState.Instructions && instructionsStartButton != null && keyboard.enterKey.wasPressedThisFrame)
+        {
+            instructionsStartButton.onClick.Invoke();
+            return;
         }
 
         if (state == ExperimentState.Setup && readyButton != null && keyboard.enterKey.wasPressedThisFrame)
@@ -686,6 +713,42 @@ public class SimpleVrWorldBuilder : MonoBehaviour
     private void OnSetupReady()
     {
         readyButton = null;
+        if (showInstructions)
+            ShowInstructions();
+        else
+            BeginAfterInstructions();
+    }
+
+    private void ShowInstructions()
+    {
+        SetFixationScreen(false);
+        SetQuestionPanelStyle(false);
+        state = ExperimentState.Instructions;
+        SetVisualState(true, false);
+        ClearContent();
+        titleText.text = instructionsTitle;
+        bodyText.text = "";
+        statusText.text = "";
+
+        Text instructions = CreateText("Instructions Text", contentRoot, 30, TextAnchor.UpperLeft);
+        instructions.text = instructionsText;
+        instructions.supportRichText = true;
+        instructions.verticalOverflow = VerticalWrapMode.Truncate;
+        instructions.resizeTextForBestFit = true;
+        instructions.resizeTextMinSize = 16;
+        instructions.resizeTextMaxSize = 30;
+        SetRect(instructions.rectTransform, new Vector2(0f, 110f), new Vector2(1000f, 520f));
+
+        instructionsStartButton = CreateButton(instructionsButtonLabel, contentRoot, new Vector2(0f, -215f),
+            new Vector2(500f, 70f), () =>
+            {
+                instructionsStartButton = null;
+                BeginAfterInstructions();
+            });
+    }
+
+    private void BeginAfterInstructions()
+    {
         if (askComfortQuestions)
             ShowIntro();
         else

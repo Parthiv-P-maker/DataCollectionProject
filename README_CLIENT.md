@@ -74,7 +74,7 @@ It shows four lines:
 - Nothing on this page is saved.
 
 ### 5. The experiment (runs by itself)
-1. After you press Ready, the first image sequence starts straight away.
+1. After you press Ready, an **instructions page** appears. Let the participant read it (or read it to them), then the participant presses **Start**.
 2. For each image (currently 8): a blank white screen with a cross, then the image, then the cross again, then one question: "How safe do you feel in this alley (or street corridor)?" answered on a 1-5 scale.
 3. A "Thank you" screen with an Exit button.
 

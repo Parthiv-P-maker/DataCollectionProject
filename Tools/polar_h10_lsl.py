@@ -13,6 +13,7 @@ import asyncio
 import struct
 
 from bleak import BleakClient, BleakScanner
+from bleak.exc import BleakBluetoothNotAvailableError
 from pylsl import StreamInfo, StreamOutlet, local_clock
 
 HR_MEASUREMENT = "00002a37-0000-1000-8000-00805f9b34fb"
@@ -49,9 +50,15 @@ async def run(device_filter):
     rr_outlet = make_outlet("RRinterval", "ms", source + "_RR")
     while True:
         print("Scanning for Polar H10" + (f" {device_filter}" if device_filter else "") + " ...")
-        device = await BleakScanner.find_device_by_filter(
-            lambda d, adv: (d.name or "").startswith("Polar H10") and device_filter.upper() in (d.name or "").upper(),
-            timeout=15.0)
+        try:
+            device = await BleakScanner.find_device_by_filter(
+                lambda d, adv: (d.name or "").startswith("Polar H10") and device_filter.upper() in (d.name or "").upper(),
+                timeout=15.0)
+        except BleakBluetoothNotAvailableError:
+            print("BLUETOOTH IS OFF on this laptop. Turn it on (Windows Settings > Bluetooth & devices), "
+                  "make sure Airplane mode is off. Checking again in 5 seconds...")
+            await asyncio.sleep(5)
+            continue
         if device is None:
             print("Not found. Is the strap worn and wet, and Excite-O-Meter closed? Retrying...")
             continue

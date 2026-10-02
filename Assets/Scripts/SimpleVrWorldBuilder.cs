@@ -44,17 +44,20 @@ public class SimpleVrWorldBuilder : MonoBehaviour
     [Tooltip("Rich text is allowed, e.g. <b>bold</b>. The font shrinks automatically to fit.")]
     [TextArea(6, 20)]
     public string instructionsText =
-        "<b>Welcome to the Visual Perception Task!</b>\n\n" +
+        "<b>Welcome to the Visual Perception Task!</b>\n" +
         "In this session, you will view a series of 16 360° images showcasing various street environments.\n\n" +
         "<b>Observe:</b> Each image will be displayed in the headset for 10 seconds. Please look around naturally, focusing on whichever details catch your attention.\n\n" +
-        "<b>Rate:</b> Immediately following each image, you will answer 5 brief questions using a 7-point scale to share how the image made you feel.\n\n" +
-        "<b>Important Guidelines for Accurate Recording:</b>\n" +
-        "<b>Keep Still:</b> Try to keep your head as steady as possible throughout the task.\n" +
-        "<b>Blink Normally:</b> Feel free to blink naturally. No need to hold your eyes open unnaturally.\n" +
+        "<b>Rate:</b> Immediately after viewing each image, you will answer a question with five response options\n\n" +
+        "<b>Accurate Recording:</b>\n" +
+        "<b>Keep Still:</b> Try to keep your head as steady as possible throughout the task.\n\n" +
+        "<b>Blink Normally:</b> Feel free to blink naturally. No need to hold your eyes open unnaturally.\n\n" +
         "<b>Take Your Time:</b> Answer the questions honestly based on your immediate impression. There are no right or wrong answers.\n\n" +
         "By pressing the start button below, you confirm that you have read the study information and voluntarily consent to participate.\n\n" +
-        "When you are comfortable and ready to begin, press the START button.";
+        "When you are comfortable and ready to begin, press the <b>START</b> button.";
     public string instructionsButtonLabel = "START";
+    [Tooltip("How much larger the instruction page is shown compared with the other pages (1 = same size).")]
+    [Range(1f, 2f)]
+    public float instructionsPageScale = 1.45f;
     public ExperimentQuestion startingQuestion = new ExperimentQuestion
     {
         prompt = "How comfortable do you feel right now?",
@@ -160,6 +163,7 @@ public class SimpleVrWorldBuilder : MonoBehaviour
 
     private Button readyButton;
     private Button instructionsStartButton;
+    private const float normalCanvasScale = 0.00125f;
     private float nextSetupRefreshTime;
     private bool editingBridgeIp;
     private float nextEyeDiagnosticLogTime;
@@ -527,7 +531,7 @@ public class SimpleVrWorldBuilder : MonoBehaviour
             canvasObject.transform.localPosition = new Vector3(0f, 0f, 1.8f);
             canvasObject.transform.localRotation = Quaternion.identity;
         }
-        canvasObject.transform.localScale = Vector3.one * 0.00125f;
+        canvasObject.transform.localScale = Vector3.one * normalCanvasScale;
 
         uiPanel = CreateUiObject("Experiment Panel", canvasObject.transform);
         panelImage = uiPanel.AddComponent<Image>();
@@ -725,6 +729,8 @@ public class SimpleVrWorldBuilder : MonoBehaviour
         SetQuestionPanelStyle(false);
         state = ExperimentState.Instructions;
         SetVisualState(true, false);
+        if (uiCanvas != null)
+            uiCanvas.transform.localScale = Vector3.one * normalCanvasScale * instructionsPageScale;
         ClearContent();
         titleText.text = instructionsTitle;
         bodyText.text = "";
@@ -735,9 +741,9 @@ public class SimpleVrWorldBuilder : MonoBehaviour
         instructions.supportRichText = true;
         instructions.verticalOverflow = VerticalWrapMode.Truncate;
         instructions.resizeTextForBestFit = true;
-        instructions.resizeTextMinSize = 16;
-        instructions.resizeTextMaxSize = 30;
-        SetRect(instructions.rectTransform, new Vector2(0f, 110f), new Vector2(1000f, 520f));
+        instructions.resizeTextMinSize = 14;
+        instructions.resizeTextMaxSize = 34;
+        SetRect(instructions.rectTransform, new Vector2(0f, 115f), new Vector2(1010f, 550f));
 
         instructionsStartButton = CreateButton(instructionsButtonLabel, contentRoot, new Vector2(0f, -215f),
             new Vector2(500f, 70f), () =>
@@ -749,6 +755,8 @@ public class SimpleVrWorldBuilder : MonoBehaviour
 
     private void BeginAfterInstructions()
     {
+        if (uiCanvas != null)
+            uiCanvas.transform.localScale = Vector3.one * normalCanvasScale;
         if (askComfortQuestions)
             ShowIntro();
         else
@@ -911,9 +919,12 @@ public class SimpleVrWorldBuilder : MonoBehaviour
         for (int i = 0; i < question.options.Length; i++)
         {
             string option = question.options[i];
-            Button answerButton = CreateButton(option, contentRoot, new Vector2(0f, startY - i * 70f), new Vector2(860f, 58f), () =>
+            Button answerButton = null;
+            answerButton = CreateButton(option, contentRoot, new Vector2(0f, startY - i * 70f), new Vector2(860f, 58f), () =>
             {
                 selectedRating = option;
+                foreach (Button other in desktopAnswerButtons)
+                    SetOptionSelected(other, other == answerButton);
                 if (nextButton != null)
                     nextButton.interactable = true;
                 statusText.text = "Answer selected. Press Next to continue.";
@@ -1110,6 +1121,29 @@ public class SimpleVrWorldBuilder : MonoBehaviour
         checkmark.gameObject.SetActive(false);
         ratingCheckmarks.Add(checkmark);
         return button;
+    }
+
+    private static readonly Color OptionSelectedColor = new Color(0.62f, 0.62f, 0.62f, 1f);
+
+    private void SetOptionSelected(Button button, bool selected)
+    {
+        if (button == null) return;
+        ColorBlock colors = button.colors;
+        if (selected)
+        {
+            colors.normalColor = OptionSelectedColor;
+            colors.highlightedColor = new Color(0.56f, 0.56f, 0.56f, 1f);
+            colors.selectedColor = OptionSelectedColor;
+            colors.pressedColor = new Color(0.5f, 0.5f, 0.5f, 1f);
+        }
+        else
+        {
+            colors.normalColor = Color.white;
+            colors.highlightedColor = new Color(0.9f, 0.9f, 0.9f, 1f);
+            colors.selectedColor = Color.white;
+            colors.pressedColor = new Color(0.75f, 0.75f, 0.75f, 1f);
+        }
+        button.colors = colors;
     }
 
     private Button CreateButton(string label, Transform parent, Vector2 position, Vector2 size, UnityEngine.Events.UnityAction callback)

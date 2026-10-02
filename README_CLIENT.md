@@ -1,6 +1,6 @@
 # VR Study - Instructions for Running Sessions
 
-This study shows each participant a series of 360-degree street images (currently 8) in a Meta Quest Pro headset while recording where they look (eye tracking) and their heart rate (Polar H10 chest strap). Everything is saved automatically, one folder per participant.
+This study shows each participant a series of 360-degree street images (currently 18) in a Meta Quest Pro headset while recording where they look (eye tracking) and their heart rate (Polar H10 chest strap). Everything is saved automatically, one folder per participant.
 
 You do **not** need to use Unity. You only need the files in this folder.
 
@@ -75,7 +75,7 @@ It shows four lines:
 
 ### 5. The experiment (runs by itself)
 1. After you press Ready, an **instructions page** appears. Let the participant read it (or read it to them), then the participant presses **Start**.
-2. For each image (currently 8): a blank white screen with a cross, then the image, then the cross again, then one question: "How safe do you feel in this alley (or street corridor)?" answered on a 1-5 scale.
+2. For each image (currently 18): a blank white screen with a cross, then the image, then the cross again, then one question: "How safe do you feel in this alley (or street corridor)?" answered on a 1-5 scale.
 3. A "Thank you" screen with an Exit button.
 
 Tell the participant to keep the headset on and look around naturally. They use the controller to point and press.

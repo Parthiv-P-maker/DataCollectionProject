@@ -46,7 +46,7 @@ Requires `pip install bleak pylsl`. ECG is not streamed.
 ## Session flow
 
 1. **System check**: shows the auto-generated participant ID (`P001`, `P002`, ...), live Polar H10 heart rate, LSL clock sync and eye-tracking status. Nothing on this page is saved. Press **Ready**.
-2. **Instructions page**: title, text and button label are set on the Experiment Controller (`Instructions Title`, `Instructions Text`, `Instructions Button Label`; untick `Show Instructions` to skip it). The participant presses **Start** (Enter in the Editor).
+2. **Instructions page**: title, text and button label are set on the Experiment Controller (`Instructions Title`, `Instructions Text`, `Instructions Button Label`, `Instructions Page Scale` = how much larger this page is drawn than the others; untick `Show Instructions` to skip it). The participant presses **Start** (Enter in the Editor).
 3. Fixation / image / fixation / questions for each image. The opening and closing 1-9 comfort ratings are switched off by default; tick `Ask Comfort Questions` on the Experiment Controller to bring them back (their columns stay in the CSVs, blank when off).
 3. **Experiment Complete** screen with an **Exit** button that closes the files and quits the app.
 

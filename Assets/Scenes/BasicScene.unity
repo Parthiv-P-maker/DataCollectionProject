@@ -644,6 +644,23 @@ MonoBehaviour:
   imageDurationSeconds: 10
   gazeSampleIntervalSeconds: 0.05
   askComfortQuestions: 0
+  showInstructions: 1
+  instructionsTitle: General Instruction
+  instructionsText: "<b>Welcome to the Visual Perception Task!</b>\n\nIn this session,
+    you will view a series of 18 360\xB0 images showcasing various street environments.\n\n<b>Observe:</b>
+    Each image will be displayed in the headset for 10 seconds. Please look around
+    naturally, focusing on whichever details catch your attention.\n\n<b>Rate:</b>
+    Immediately following each image, you will answer one question about how safe
+    you feel in that place, using a 5-point scale from Very unsafe to Very safe.\n\n<b>Important Guidelines for Accurate
+    Recording:</b>\n<b>Keep Still:</b> Try to keep your head as steady as possible
+    throughout the task.\n<b>Blink Normally:</b> Feel free to blink naturally. No
+    need to hold your eyes open unnaturally.\n<b>Take Your Time:</b> Answer the questions
+    honestly based on your immediate impression. There are no right or wrong answers.\n\nBy
+    pressing the start button below, you confirm that you have read the study information
+    and voluntarily consent to participate.\n\nWhen you are comfortable and ready
+    to begin, press the START button."
+  instructionsButtonLabel: START
+  instructionsPageScale: 1.45
   startingQuestion:
     prompt: How comfortable do you feel right now?
     options:

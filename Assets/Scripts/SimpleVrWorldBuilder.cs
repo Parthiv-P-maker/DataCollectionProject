@@ -45,9 +45,9 @@ public class SimpleVrWorldBuilder : MonoBehaviour
     [TextArea(6, 20)]
     public string instructionsText =
         "<b>Welcome to the Visual Perception Task!</b>\n" +
-        "In this session, you will view a series of 16 360° images showcasing various street environments.\n\n" +
+        "In this session, you will view a series of 18 360° images showcasing various street environments.\n\n" +
         "<b>Observe:</b> Each image will be displayed in the headset for 10 seconds. Please look around naturally, focusing on whichever details catch your attention.\n\n" +
-        "<b>Rate:</b> Immediately after viewing each image, you will answer a question with five response options\n\n" +
+        "<b>Rate:</b> Immediately following each image, you will answer one question about how safe you feel in that place, using a 5-point scale from Very unsafe to Very safe.\n\n" +
         "<b>Accurate Recording:</b>\n" +
         "<b>Keep Still:</b> Try to keep your head as steady as possible throughout the task.\n\n" +
         "<b>Blink Normally:</b> Feel free to blink naturally. No need to hold your eyes open unnaturally.\n\n" +

@@ -78,7 +78,9 @@ Heart rate is recorded for each trial from the opening fixation cross to the end
 
 `python Tools/gaze_fixations.py <ExperimentData folder>` detects fixations offline with I-DT (dispersion 1.5 deg, minimum 100 ms, adjacent same-spot fixations merged; `--dispersion-deg` / `--min-duration` to change) from the ~20 Hz eye samples (`gaze_valid = 1` only), writing `P001_fixations.csv`, `P001_fixation_summary.csv` and `P001_image_N_fixations.png`. FinishSession.bat runs it automatically. Timing resolution is about 50 ms because the app samples gaze at 20 Hz.
 
-`python Tools/live_heart_rate.py` shows a live laptop chart of the Polar H10 heart rate with a no-contact warning (opened by StartSession.bat). It reads the LSL stream directly, so it has no image markers and saves nothing.
+`python Tools/live_heart_rate.py` shows a live laptop chart of the Polar H10 heart rate with a no-contact warning (opened by StartSession.bat), plus image bands and the current phase from the headset. The app forwards every logged event over the bridge connection (background thread, dropped if disconnected); the bridge republishes them as the LSL string stream `StudyMarkers` (JSON: trial, marker, object_id, metadata), stamped on arrival, and saves them as `Marker` rows in its backup CSV. The headset's `events.csv` remains the exact record.
+
+`python Tools/remove_participant.py P003` (or RemoveParticipant.bat) pulls the newest headset data, moves the participant folder to `CollectedData/_removed/`, deletes it from the headset, and rebuilds `Combined/` (gaze rows and heatmap sums, identical to the app's own format) on the laptop and headset. `--list` shows participants and whether they are complete; `--laptop-only` leaves the headset alone.
 
 `python Tools/analyze_session.py <participant-folder>` merges gaze, events and heart rate into `synchronized.csv`, one row per sample sorted by time, carrying the `phase` column and the image start/end markers for plotting.
 

@@ -25,8 +25,8 @@ You do **not** need to use Unity. You only need the files in this folder.
 ### On the headset
 1. Turn on **Developer Mode** (Meta Horizon phone app -> Devices -> your headset -> Developer Mode).
 2. In the headset: **Settings -> Movement tracking -> Eye tracking: On**.
-3. Connect the headset to the same Wi-Fi as the laptop.
-
+3. Connect the headset to the same Wi-Fi as the laptop.++ `
+ 
 ### Install the study app
 1. Plug the headset into the laptop with the USB cable and put the headset on.
 2. If it asks "Allow USB debugging?", choose **Always allow** and **Allow**.
@@ -51,7 +51,7 @@ Then **close the app completely and open it again once** so eye tracking starts.
 2. More windows open. **Leave them open.**
    - **"Study - Polar H10"** should start printing lines like `HR 72 bpm`. If it keeps saying "Not found", re-wet the strap and make sure Excite-O-Meter is closed.
    - **"Study - Bridge"** will say `Connected LSL stream: HeartRate`.
-   - **"Live heart rate"** shows a live chart. Green "Strap OK" with a number is good. Red **NO SKIN CONTACT** means wet the strap and tighten it. Keep this window visible during the session. Nothing in it is saved.
+   - **"Live heart rate"** shows a live chart. Green "Strap OK" with a number is good. Red **NO SKIN CONTACT** means wet the strap and tighten it. During the session it also shows **blue bands while an image is on screen** (red line = image starts, green line = image ends, with the image name) and, at the top, what the participant is doing right now (cross, IMAGE, answering). Keep this window visible during the session. Nothing in it is saved.
 3. The first window prints **this laptop's address** (for example `192.168.1.106`). Keep it in mind for step 4.
 
 ### 3. Put the headset on the participant
@@ -124,6 +124,20 @@ In `P001_gaze.csv`, rows with `gaze_valid` = 1 are real eye tracking. Rows with 
 
 ---
 
+## Removing a faulty session
+
+Use this if a session went wrong (participant stopped early, headset slipped, wrong person, test run):
+
+1. Plug the headset into the laptop (put it on and press **Allow** if asked).
+2. Double-click **RemoveParticipant.bat**. It lists every participant and marks unfinished ones as **INCOMPLETE**.
+3. Type the number(s) to remove, for example `P003`, press Enter, then type `YES` to confirm.
+
+It removes the participant from the headset and the laptop and rebuilds the all-participant (Combined) files without them. Nothing is lost: the removed folder is kept in `CollectedData\_removed\` and can be moved back.
+
+Participant numbers are not reused if a later one exists (a gap such as P001, P002, P004 is fine). If you remove the newest participant, the next session gets that number again.
+
+If only **one image** in an otherwise good session was disturbed, do not remove the participant; write it down (participant, image) so it can be excluded during analysis.
+
 ## Important rules
 
 - **Never uninstall the app** from the headset. It deletes all saved results and restarts the numbering at P001.
@@ -155,3 +169,4 @@ In `P001_gaze.csv`, rows with `gaze_valid` = 1 are real eye tracking. Rows with 
 | `Install_App.bat` | Once per headset, or after getting a new app version |
 | `StartSession.bat` | Before each participant (or once for a whole day) |
 | `FinishSession.bat` | After sessions, to collect the results |
+| `RemoveParticipant.bat` | Only to remove a faulty session |

@@ -3,6 +3,9 @@
 Run on the Windows laptop hosting Excite-O-Meter, not on the headset:
     python physiology_lsl_bridge.py --quest-port 8765 --backup-dir recordings
 
+Events sent by the headset app are republished as the LSL stream "StudyMarkers" (read by live_heart_rate.py)
+and saved as "Marker" rows in the backup file.
+
 Messages retain the source LSL timestamp. Sync replies allow the Quest to map its
 monotonic clock into the same LSL time domain using a midpoint (NTP-style) estimate.
 """
@@ -15,7 +18,7 @@ import threading
 import time
 from pathlib import Path
 
-from pylsl import StreamInlet, local_clock, resolve_byprop
+from pylsl import StreamInfo, StreamInlet, StreamOutlet, local_clock, resolve_byprop
 
 STREAMS = {"HeartRate": ("heart_rate_bpm", int), "RRinterval": ("rr_interval_ms", float), "RawECG": ("ecg_value", float)}
 
@@ -49,7 +52,7 @@ def send_json(conn, payload, lock):
     encoded = (json.dumps(payload, separators=(",", ":")) + "\n").encode("utf-8")
     with lock: conn.sendall(encoded)
 
-def serve(port, physiological, stop):
+def serve(port, physiological, stop, markers=None, backup=None):
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     server.bind(("0.0.0.0", port)); server.listen(1); server.settimeout(.5)
@@ -72,6 +75,12 @@ def serve(port, physiological, stop):
                         if message.get("type") == "sync_ping":
                             send_json(conn, {"type":"sync_reply", "quest_sent_monotonic":message["quest_sent_monotonic"],
                                              "received_lsl":request_received, "sent_lsl":local_clock()}, lock)
+                        elif message.get("type") == "marker" and markers is not None:
+                            # Stamped on arrival (off by the Wi-Fi delay); events.csv on the headset has exact times.
+                            fields = {k: message.get(k, "") for k in ("trial", "marker", "object_id", "metadata")}
+                            markers.push_sample([json.dumps(fields)], request_received)
+                            if backup is not None:
+                                backup.put((request_received, "Marker", "|".join(str(fields[k]) for k in fields)))
                 except socket.timeout: pass
                 while True:
                     try: send_json(conn, physiological.get_nowait(), lock)
@@ -86,7 +95,8 @@ def main():
     threads = [threading.Thread(target=inlet_worker, args=(name, physiological, backup, stop), daemon=True) for name in STREAMS]
     threads.append(threading.Thread(target=writer, args=(args.backup_dir / "physiology_bridge_backup.csv", backup, stop), daemon=True))
     for thread in threads: thread.start()
-    try: serve(args.quest_port, physiological, stop)
+    markers = StreamOutlet(StreamInfo("StudyMarkers", "Markers", 1, 0, "string", "study_markers"))
+    try: serve(args.quest_port, physiological, stop, markers, backup)
     except KeyboardInterrupt: print("Stopping bridge.")
     finally: stop.set()
 

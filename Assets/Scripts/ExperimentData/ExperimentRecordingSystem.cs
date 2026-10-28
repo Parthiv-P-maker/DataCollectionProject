@@ -141,7 +141,11 @@ public sealed class ExperimentRecordingSystem : MonoBehaviour
     {
         if (!recording) return;
         Enqueue(2, Csv(EstimatedLslTime) + "," + Csv(MonotonicSeconds) + "," + Csv(participantId) + "," + Csv(sessionId) + "," + Csv(trialId) + "," + Csv(eventType) + "," + Csv(objectId) + "," + Csv(metadata));
+        EventLogged?.Invoke(eventType, objectId, metadata, trialId);
     }
+
+    /// <summary>Raised on the main thread for every logged event (eventType, objectId, metadata, trialId).</summary>
+    public event Action<string, string, string, string> EventLogged;
 
     private void Update() { Drain(); }
     private void OnApplicationQuit() { CloseSession(); }
